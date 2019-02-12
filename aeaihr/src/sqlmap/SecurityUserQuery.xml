@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="SecurityUserQuery">    
+  <select id="retrieveUserInfo" parameterClass="com.agileai.domain.DataParam" resultClass="com.agileai.domain.DataRow">
+  	SELECT u.USER_ID,u.USER_CODE,u.USER_PWD from security_user u  
+  	where 1=1
+  	<isNotEmpty prepend=" " property="openId">
+  	and u.USER_WX_OPENID=#openId#
+  	</isNotEmpty>
+  	<isNotEmpty prepend=" " property="userCode">
+  	and u.USER_CODE=#userCode#
+  	</isNotEmpty>
+  </select>
+  <update id="updateUserInfo" parameterClass="com.agileai.domain.DataParam">
+    update security_user set USER_WX_OPENID = #openId#
+    where USER_CODE = #userCode#
+  </update>  
+</sqlMap>
